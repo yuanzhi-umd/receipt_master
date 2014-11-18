@@ -5,7 +5,7 @@ package com.bootcamp.receipt.receiptviewer;
  */
 public class Receipt {
 
-    private int receiptID = 0;
+    private long receiptID = 0;
     private int timeStamp = 0;
     private float totalAmount = 0;
     private String description = null;
@@ -60,4 +60,10 @@ public class Receipt {
     public String getImageUrl() {
         return imageUrl;
     }
+
+    public void setId(long receiptId) {
+        this.receiptID = receiptId;
+    }
+
+    public long getId() {return this.receiptID; }
 }
