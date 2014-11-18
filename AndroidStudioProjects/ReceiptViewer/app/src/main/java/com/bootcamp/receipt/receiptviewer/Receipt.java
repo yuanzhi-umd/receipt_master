@@ -3,7 +3,7 @@ package com.bootcamp.receipt.receiptviewer;
 /**
  * Created by yuanzhi on 11/18/14.
  */
-public class ReceiptDataBase {
+public class Receipt {
 
     private int receiptID = 0;
     private int timeStamp = 0;
