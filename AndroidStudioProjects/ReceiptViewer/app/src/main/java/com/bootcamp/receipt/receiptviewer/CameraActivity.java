@@ -19,9 +19,9 @@ import java.io.InputStream;
 import java.net.URL;
 
 
-public class CameraCapture extends Activity {
+public class CameraActivity extends Activity {
 
-    private String LOG_TAG = CameraCapture.class.getCanonicalName();
+    private String LOG_TAG = CameraActivity.class.getCanonicalName();
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
