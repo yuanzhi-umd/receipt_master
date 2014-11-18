@@ -40,4 +40,32 @@ public class ReceiptDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
+    private void initializeDummyData(SQLiteDatabase db) {
+        String SqlString;
+        SqlString = "INSERT INTO " + TABLE_NAME +
+                "(purchase_ts, receipt_desc, total_amount, category, vendor, image_url) VALUES" +
+                "(1416324270, 'Morning Coffee' 4.50, 'Food', 'Petes Coffee', 'images/receipt1');";
+        db.execSQL(SqlString);
+
+        SqlString = "INSERT INTO " + TABLE_NAME +
+                "(purchase_ts, receipt_desc, total_amount, category, vendor, image_url) VALUES" +
+                "(1410054270, 'Gas' 45, 'Fuel', 'Chevron', 'images/receipt_gas');";
+        db.execSQL(SqlString);
+
+        SqlString = "INSERT INTO " + TABLE_NAME +
+                "(purchase_ts, receipt_desc, total_amount, category, vendor, image_url) VALUES" +
+                "(1341635427, 'Paris Trip' 1100, 'Travel', 'Air France', 'images/receipt3');";
+        db.execSQL(SqlString);
+
+        SqlString = "INSERT INTO " + TABLE_NAME +
+                "(purchase_ts, receipt_desc, total_amount, category, vendor, image_url) VALUES" +
+                "(1323908451, 'Titanic Movie' 10.99, 'Entertainment', 'AMC', 'images/receipt4');";
+        db.execSQL(SqlString);
+
+        SqlString = "INSERT INTO " + TABLE_NAME +
+                "(purchase_ts, receipt_desc, total_amount, category, vendor, image_url) VALUES" +
+                "(1123920499, 'Car Rental' 125.75, 'Travel', 'Avis', 'images/receipt5');";
+        db.execSQL(SqlString);
+    }
 }
