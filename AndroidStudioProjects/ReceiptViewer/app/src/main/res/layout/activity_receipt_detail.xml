@@ -29,7 +29,14 @@
         android:prompt="@string/category_default"
         android:layout_below="@+id/amount_text_edit"
         />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        android:text="Camera"
+        android:id="@+id/camera"
+        android:layout_gravity="left|top"
+        android:layout_below="@+id/category_select"
+        />
     <ImageView
         android:id="@+id/receiptView"
         android:layout_width="wrap_content"

@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 
     private String LOG_TAG = MainActivity.class.getCanonicalName();
     private Button camera;
+    private Button create_new_entry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,15 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent, 1);
             }
         });
+
+        create_new_entry = (Button) findViewById(R.id.create_new);
+        create_new_entry.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReceiptDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     long receipt_id;
