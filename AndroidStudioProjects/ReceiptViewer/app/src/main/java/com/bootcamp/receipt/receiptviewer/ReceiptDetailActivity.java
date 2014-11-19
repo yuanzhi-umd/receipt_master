@@ -80,6 +80,7 @@ public class ReceiptDetailActivity extends Activity {
             photo_data_path = r.getImageUrl();
             dao.close();
             Log.i(LOG_TAG, "saved photo path is: " + photo_data_path);
+
             File imgFile = new File(photo_data_path);
             if(imgFile.exists()){
                 Log.i(LOG_TAG, "image file exists!");

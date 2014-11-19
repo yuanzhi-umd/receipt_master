@@ -18,17 +18,17 @@
         android:layout_height="wrap_content"
         android:hint="@string/amount_default"
         android:minHeight="48dp"
-        android:layout_below="@+id/vendor_text_edit"
+        android:layout_below="@id/vendor_text_edit"
         />
 
     <Spinner
         android:id="@+id/category_select"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawSelectorOnTop="true"
         android:entries="@array/category_select"
         android:prompt="@string/category_default"
-        android:layout_below="@+id/amount_text_edit"
+        android:layout_below="@id/amount_text_edit"
         />
 
     <EditText
@@ -38,7 +38,7 @@
         android:inputType="textMultiLine"
         android:hint="@string/description_default"
         android:minHeight="48dp"
-        android:layout_below="@+id/category_select"
+        android:layout_below="@id/category_select"
         />
 
     <Button
@@ -46,8 +46,8 @@
         android:layout_height="59dp"
         android:text="Take Receipt Photo"
         android:id="@+id/camera"
-        android:layout_gravity="left|top"
-        android:layout_below="@+id/description_text_edit"
+        android:layout_gravity="start|top"
+        android:layout_below="@id/description_text_edit"
         />
 
     <ImageView
@@ -55,6 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/category_select"
+        android:layout_below="@id/camera"
         />
 </RelativeLayout>
