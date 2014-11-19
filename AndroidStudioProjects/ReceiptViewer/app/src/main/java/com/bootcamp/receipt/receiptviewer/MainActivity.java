@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
 
+    private String LOG_TAG = MainActivity.class.getCanonicalName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -36,6 +38,15 @@ public class MainActivity extends Activity {
         }
     }
 
+    long receipt_id;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                receipt_id = data.getLongExtra("receipt_id", 0);
+                Log.i(LOG_TAG, "got receipt_id: " + receipt_id);
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,7 +68,7 @@ public class MainActivity extends Activity {
         }
         if (id == R.id.action_image_capture){
             Intent intent = new Intent(this, CameraActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
             return true;
         }
         return super.onOptionsItemSelected(item);
