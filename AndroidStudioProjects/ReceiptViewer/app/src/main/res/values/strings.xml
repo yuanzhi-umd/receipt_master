@@ -7,4 +7,5 @@
     <string name="title_receipt_detail">Receipt Detail</string>
     <string name="camera_settings">Take Photo</string>
     <string name ="title_activity_camera">Camera Activity</string>
+    <string name = "error_capturing_image">Failed to capture image</string>
 </resources>

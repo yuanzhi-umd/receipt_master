@@ -40,7 +40,7 @@ public class ReceiptDAO {
     }
 
     public long insertReceipt(ContentValues cv) {
-        long insertId = database.insert(ReceiptDBHelper.RECEIPTS_TABLE_NAME, null, cv);
+        long insertId = database.insert(ReceiptDBHelper.RECEIPTS_TABLE_NAME, "", cv);
         return insertId;
     }
 

@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,9 +21,8 @@ import java.util.Date;
 public class CameraActivity extends Activity {
 
     private String LOG_TAG = CameraActivity.class.getCanonicalName();
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,37 +53,37 @@ public class CameraActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            long receiptID = createDataEntry();
-
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("receipt_id",receiptID);
-            setResult(RESULT_OK, returnIntent);
-            //galleryAddPic();
-            //ImageView.setImageBitmap(imageBitmap);
-            // Display image on main layout
+    protected void onActivityResult(int requestCode, int resultCode, Intent returnedIntent) {
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            Log.i(LOG_TAG, "at onActivityResult");
+            if (resultCode == RESULT_OK && mCurrentPhotoPath != null) {
+                long receiptID = createDataEntry();
+                Intent toMainIntent = new Intent();
+                toMainIntent.putExtra("receipt_id", receiptID);
+                setResult(RESULT_OK, toMainIntent);
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.d(LOG_TAG, "User cancelled taking picture.");
+            } else {
+                Toast.makeText(this, getString(R.string.error_capturing_image), Toast.LENGTH_LONG).show();
+            }
         }
     }
+
 
     private long createDataEntry() {
         long epoch = System.currentTimeMillis()/1000;
 
         ContentValues cv = new ContentValues();
+        Log.i(LOG_TAG, "data path: " + mCurrentPhotoPath);
+
         cv.put(ReceiptDBHelper.DATABASE_COLUMNS[6], mCurrentPhotoPath);
         cv.put(ReceiptDBHelper.DATABASE_COLUMNS[1], epoch);
-        return new ReceiptDAO(this).insertReceipt(cv);
+        ReceiptDAO r = new ReceiptDAO(this);
+        r.open();
+        long r_id =  r.insertReceipt(cv);
+        r.close();
+        return r_id;
     }
-
-//    private void galleryAddPic() {
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        File f = new File(mCurrentPhotoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        this.sendBroadcast(mediaScanIntent);
-//    }
 
 
     private File createImageFile() throws IOException {
