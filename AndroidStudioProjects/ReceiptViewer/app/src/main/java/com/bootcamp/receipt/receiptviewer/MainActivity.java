@@ -34,9 +34,14 @@ public class MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment())
+                    .commit();
+        }
 
         camera = (Button) findViewById(R.id.camera);
-
         camera.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
@@ -44,13 +49,6 @@ public class MainActivity extends Activity {
             }
 
         });
-
-        setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
     }
 
     long receipt_id;
