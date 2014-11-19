@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
 
 
 import java.io.BufferedInputStream;
@@ -26,10 +27,24 @@ import java.io.IOException;
 public class MainActivity extends Activity {
 
     private String LOG_TAG = MainActivity.class.getCanonicalName();
+    private Button camera;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
+        camera = (Button) findViewById(R.id.camera);
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
