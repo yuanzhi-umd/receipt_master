@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.13.2'
@@ -15,5 +16,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        //mavenCentral()
+        //maven {
+        //    url "http://www.mygrid.org.uk/maven/repository"
+        //}
+        //maven {
+        //    url "http://repo.ghost4j.org/maven2/releases"
+        //}
     }
 }
