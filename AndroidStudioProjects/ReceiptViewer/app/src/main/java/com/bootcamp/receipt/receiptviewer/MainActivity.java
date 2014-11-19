@@ -27,7 +27,6 @@ import java.io.IOException;
 public class MainActivity extends Activity {
 
     private String LOG_TAG = MainActivity.class.getCanonicalName();
-    private Button camera;
     private Button create_new_entry;
 
     @Override
@@ -42,14 +41,6 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        camera = (Button) findViewById(R.id.camera);
-        camera.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
-
         create_new_entry = (Button) findViewById(R.id.create_new);
         create_new_entry.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -58,16 +49,6 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
-
-    long receipt_id;
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK){
-                receipt_id = data.getLongExtra("receipt_id", 0);
-                Log.i(LOG_TAG, "got receipt_id: " + receipt_id);
-            }
-        }
     }
 
     @Override

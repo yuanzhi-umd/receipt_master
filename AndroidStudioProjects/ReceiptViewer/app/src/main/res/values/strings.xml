@@ -3,6 +3,7 @@
 
     <string name="app_name">ReceiptViewer</string>
     <string name="hello_world">Hello world!</string>
+    <string name="blank_screen">I am a blank screen</string>
     <string name="action_settings">Settings</string>
     <string name="title_receipt_detail">Receipt Detail</string>
     <string name="camera_settings">Take Photo</string>
@@ -11,6 +12,7 @@
     <string name = "vendor_default">Enter Vendor</string>
     <string name = "amount_default">Enter Amount</string>
     <string name = "category_default">Select an expense category</string>
+    <string name = "description_default">Enter Description</string>
 
     <string-array name="category_select">
         <item>Fuel</item>
