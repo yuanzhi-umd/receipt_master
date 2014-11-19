@@ -67,8 +67,8 @@ public class CameraActivity extends Activity {
                 Toast.makeText(this, getString(R.string.error_capturing_image), Toast.LENGTH_LONG).show();
             }
         }
+        finish();
     }
-
 
     private long createDataEntry() {
         long epoch = System.currentTimeMillis()/1000;
@@ -85,6 +85,13 @@ public class CameraActivity extends Activity {
         return r_id;
     }
 
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
