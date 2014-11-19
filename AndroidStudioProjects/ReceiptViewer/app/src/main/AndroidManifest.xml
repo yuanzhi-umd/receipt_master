@@ -41,8 +41,8 @@
                 android:value=".ReceiptListActivity" />
         </activity>
         <activity
-            android:name="com.bootcamp.receipt.receiptviewer.CameraActivity"
-            android:label="@string/title_activity_camera" >
+            android:name="com.bootcamp.receipt.receiptviewer.CameraActivity" >
+            <!--android:label="@string/title_activity_camera" > -->
         </activity>
     </application>
 
