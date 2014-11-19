@@ -8,4 +8,15 @@
     <string name="camera_settings">Take Photo</string>
     <string name ="title_activity_camera">Camera Activity</string>
     <string name = "error_capturing_image">Failed to capture image</string>
+    <string name = "vendor_default">Enter Vendor</string>
+    <string name = "amount_default">Enter Amount</string>
+    <string name = "category_default">Select an expense category</string>
+
+    <string-array name="category_select">
+        <item>Fuel</item>
+        <item>Grocery</item>
+        <item>Clothing</item>
+        <item>Entertainment</item>
+        <item>Dining Out</item>
+    </string-array>
 </resources>

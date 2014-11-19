@@ -47,7 +47,6 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivityForResult(intent, 1);
             }
-
         });
     }
 

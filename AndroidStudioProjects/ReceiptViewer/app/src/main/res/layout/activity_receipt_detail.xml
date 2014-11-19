@@ -1,4 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/receipt_detail_container"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context=".ReceiptDetailActivity" tools:ignore="MergeRootFrame" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.google.android.bootcamp.memegen.CreateMemeActivity$InputMemeTextFragment">
+
+    <EditText
+        android:id="@+id/vendor_text_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/vendor_default"
+        android:minHeight="48dp"/>
+
+    <EditText
+        android:id="@+id/amount_text_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/amount_default"
+        android:minHeight="48dp"
+        android:layout_below="@+id/vendor_text_edit"
+        />
+
+    <Spinner
+        android:id="@+id/category_select"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/category_default"
+        android:layout_below="@+id/amount_text_edit"
+        />
+
+    <ImageView
+        android:id="@+id/receiptView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/category_select"
+        />
+
+</RelativeLayout>
