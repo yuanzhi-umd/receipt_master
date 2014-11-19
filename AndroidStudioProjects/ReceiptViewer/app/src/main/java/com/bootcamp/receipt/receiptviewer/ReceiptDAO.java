@@ -77,6 +77,24 @@ public class ReceiptDAO {
                 + " = " + receiptId, null);
     }
 
+    public void updateReceipt(ContentValues cv) {
+        database.update(ReceiptDBHelper.TABLE_NAME, cv, ReceiptDBHelper.RECEIPTS_TABLE_ID + "=" +
+                cv.getAsString(ReceiptDBHelper.RECEIPTS_TABLE_ID), null);
+    }
+
+    public void updateReceipt(Receipt receipt) {
+        ContentValues cv = new ContentValues();
+        cv.put(DATABASE_COLUMNS[0], receipt.getId());
+        cv.put(DATABASE_COLUMNS[1], receipt.getTimeStamp());
+        cv.put(DATABASE_COLUMNS[2], receipt.getDescription());
+        cv.put(DATABASE_COLUMNS[3], receipt.getTotalAmount());
+        cv.put(DATABASE_COLUMNS[4], receipt.getCategory());
+        cv.put(DATABASE_COLUMNS[5], receipt.getVendor());
+        cv.put(DATABASE_COLUMNS[6], receipt.getImageUrl());
+
+        updateReceipt(cv);
+    }
+
     public List<Receipt> getAllReceipts() {
         List<Receipt> receipts = new ArrayList<Receipt>();
 
