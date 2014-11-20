@@ -43,6 +43,23 @@ public class ReceiptDetailActivity extends Activity {
                 startActivityForResult(intent, 1);
             }
         });
+        Button save_button = (Button) findViewById(R.id.save_entry);
+        save_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Create database entry
+                // Update ReceiptList view
+
+            }
+        });
+        Button delete_button = (Button) findViewById(R.id.delete_entry);
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Delete database entry
+                // Delete receipt photo
+                // Update ReceiptList view
+
+            }
+        });
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
         // (e.g. when rotating the screen from portrait to landscape).

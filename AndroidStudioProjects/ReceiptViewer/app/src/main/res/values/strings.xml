@@ -7,13 +7,17 @@
     <string name="action_settings">Settings</string>
     <string name="title_receipt_detail">Receipt Detail</string>
     <string name="camera_settings">Take Photo</string>
-    <string name ="title_activity_camera">Camera Activity</string>
-    <string name = "error_capturing_image">Failed to capture image</string>
-    <string name = "vendor_default">Enter Vendor</string>
-    <string name = "amount_default">Enter Amount</string>
-    <string name = "category_default">Select an expense category</string>
-    <string name = "description_default">Enter Description</string>
-    <string name = "clean_database">Clear Database</string>
+    <string name="title_activity_camera">Camera Activity</string>
+    <string name="error_capturing_image">Failed to capture image</string>
+    <string name="vendor_default">Enter Vendor</string>
+    <string name="amount_default">Enter Amount</string>
+    <string name="category_default">Select an expense category</string>
+    <string name="description_default">Enter Description</string>
+    <string name="take_photo">Take Receipt Photo</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="clean_database">Clear Database</string>
+    <string name="photo_image_cont_desc">Receipt photo image</string>
 
     <string-array name="category_select">
         <item>Fuel</item>

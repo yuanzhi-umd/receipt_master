@@ -1,63 +1,89 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.google.android.bootcamp.memegen.CreateMemeActivity$InputMemeTextFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <EditText
-        android:id="@+id/vendor_text_edit"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/vendor_default"
-        android:minHeight="48dp"/>
+        android:orientation="vertical"
+        tools:context="com.google.android.bootcamp.memegen.CreateMemeActivity$InputMemeTextFragment">
 
-    <EditText
-        android:id="@+id/amount_text_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/amount_default"
-        android:minHeight="48dp"
-        android:layout_below="@id/vendor_text_edit"
-        />
+        <Button
+            android:id="@+id/save_entry"
+            android:text="@string/save"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="start|top" />
 
-    <Spinner
-        android:id="@+id/category_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true"
-        android:entries="@array/category_select"
-        android:prompt="@string/category_default"
-        android:layout_below="@id/amount_text_edit"
-        />
+        <Button
+            android:id="@+id/delete_entry"
+            android:text="@string/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@id/save_entry"
+            android:layout_toRightOf="@id/save_entry"
+            android:layout_gravity="end|top" />
 
-    <EditText
-        android:id="@+id/description_text_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/description_default"
-        android:minHeight="48dp"
-        android:layout_below="@id/category_select"
-        />
+        <EditText
+            android:id="@+id/vendor_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/vendor_default"
+            android:minHeight="48dp"
+            android:layout_below="@id/delete_entry"
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="59dp"
-        android:text="Take Receipt Photo"
-        android:id="@+id/camera"
-        android:layout_gravity="start|top"
-        android:layout_below="@id/description_text_edit"
-        />
+        <EditText
+            android:id="@+id/amount_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/amount_default"
+            android:minHeight="48dp"
+            android:layout_below="@id/vendor_text_edit"
+            />
 
-    <ImageView
-        android:id="@+id/receiptView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/camera"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        />
-</RelativeLayout>
+        <Spinner
+            android:id="@+id/category_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/category_select"
+            android:prompt="@string/category_default"
+            android:layout_below="@id/amount_text_edit"
+            />
+
+        <EditText
+            android:id="@+id/description_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="@string/description_default"
+            android:minHeight="48dp"
+            android:layout_below="@id/category_select"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            android:text="@string/take_photo"
+            android:id="@+id/camera"
+            android:layout_gravity="start|top"
+            android:layout_below="@id/description_text_edit"
+            />
+
+        <ImageView
+            android:id="@+id/receiptView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@id/camera"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/photo_image_cont_desc"
+            />
+    </RelativeLayout>
+</ScrollView>
