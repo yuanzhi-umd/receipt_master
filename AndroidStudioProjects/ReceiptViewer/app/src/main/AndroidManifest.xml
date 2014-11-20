@@ -38,9 +38,7 @@
         <activity
             android:name="com.bootcamp.receipt.receiptviewer.ReceiptDetailActivity"
             android:label="@string/title_receipt_detail"
-
             android:parentActivityName="com.bootcamp.receipt.receiptviewer.ReceiptListActivity" >
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReceiptListActivity" />
