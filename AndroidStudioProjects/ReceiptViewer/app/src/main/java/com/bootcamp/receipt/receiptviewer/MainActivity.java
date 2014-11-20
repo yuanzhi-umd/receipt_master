@@ -29,6 +29,8 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     private String LOG_TAG = MainActivity.class.getCanonicalName();
+    private Button camera;
+    private Button viewReceipts;
     private Button create_new_entry;
 
     @Override
@@ -51,6 +53,14 @@ public class MainActivity extends Activity {
             }
         });
 
+        viewReceipts = (Button) findViewById(R.id.viewReceipts);
+        viewReceipts.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReceiptListActivity.class);
+                startActivityForResult(intent, 1);
+            }
+
+        });
     }
 
     @Override
