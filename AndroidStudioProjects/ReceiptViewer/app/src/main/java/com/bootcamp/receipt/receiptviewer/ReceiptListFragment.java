@@ -9,6 +9,9 @@ import android.widget.ListView;
 
 import com.bootcamp.receipt.receiptviewer.dummy.DummyContent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A list fragment representing a list of Receipts. This fragment
  * also supports tablet devices by allowing list items to be given an
@@ -69,6 +72,25 @@ public class ReceiptListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ReceiptDAO receiptDao = new ReceiptDAO(getActivity());
+
+        List<Receipt> receiptList = null;
+        try {
+            receiptList = receiptDao.getAllReceipts();
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.printStackTrace();
+        }
+
+                 /*List<ReceiptItem> receiptItems = new ArrayList<ReceiptItem>();
+
+                 for (Receipt receipt : receiptList) {
+                         ReceiptItem item = new ReceiptItem(""+receipt.getId(), receipt.getVendor());
+                         receiptItems.add(item);
+                     }*/
+
+
 
         // TODO: replace with a real list adapter.
         setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
@@ -148,4 +170,24 @@ public class ReceiptListFragment extends ListFragment {
 
         mActivatedPosition = position;
     }
+
+
+
+    public static class ReceiptItem {
+                 public String id;
+                 public String content;
+
+                         public ReceiptItem(String id, String content) {
+                       this.id = id;
+                         this.content = content;
+                     }
+
+                         @Override
+                 public String toString() {
+                      return content;
+                     }
+          }
+
+
+
 }
