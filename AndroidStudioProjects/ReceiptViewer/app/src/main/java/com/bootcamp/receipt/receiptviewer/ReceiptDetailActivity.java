@@ -2,8 +2,16 @@ package com.bootcamp.receipt.receiptviewer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import java.io.File;
 
 
 /**
@@ -17,6 +25,9 @@ import android.view.MenuItem;
  */
 public class ReceiptDetailActivity extends Activity {
 
+    private Button camera;
+    private String LOG_TAG = ReceiptDetailActivity.class.getCanonicalName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +36,13 @@ public class ReceiptDetailActivity extends Activity {
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        camera = (Button) findViewById(R.id.camera);
+        camera.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(ReceiptDetailActivity.this, CameraActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
         // (e.g. when rotating the screen from portrait to landscape).
@@ -37,14 +55,39 @@ public class ReceiptDetailActivity extends Activity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(ReceiptDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ReceiptDetailFragment.ARG_ITEM_ID));
-            ReceiptDetailFragment fragment = new ReceiptDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .add(R.id.receipt_detail_container, fragment)
-                    .commit();
+            //Bundle arguments = new Bundle();
+            //arguments.putString(ReceiptDetailFragment.ARG_ITEM_ID,
+            //        getIntent().getStringExtra(ReceiptDetailFragment.ARG_ITEM_ID));
+            //ReceiptDetailFragment fragment = new ReceiptDetailFragment();
+            //fragment.setArguments(arguments);
+            //getFragmentManager().beginTransaction()
+            //        .add(R.id.receipt_detail_container, fragment)
+            //        .commit();
+        }
+    }
+
+    long receipt_id;
+    String photo_data_path;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                receipt_id = data.getLongExtra("receipt_id", 0);
+                Log.i(LOG_TAG, "got receipt_id: " + receipt_id);
+            }
+            ReceiptDAO dao = new ReceiptDAO(this);
+            dao.open();
+            Receipt r = dao.getReceipt(receipt_id);
+            photo_data_path = r.getImageUrl();
+            dao.close();
+            Log.i(LOG_TAG, "saved photo path is: " + photo_data_path);
+
+            File imgFile = new File(photo_data_path);
+            if(imgFile.exists()){
+                Log.i(LOG_TAG, "image file exists!");
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                ImageView myImage = (ImageView) findViewById(R.id.receiptView);
+                myImage.setImageBitmap(myBitmap);
+            }
         }
     }
 

@@ -30,9 +30,14 @@ public class ReceiptDAO {
     }
 
     public Receipt getReceipt(long receiptId) {
-        Cursor cursor = database.query(ReceiptDBHelper.RECEIPTS_TABLE_NAME,
-                ReceiptDBHelper.DATABASE_COLUMNS, ReceiptDBHelper.RECEIPTS_TABLE_ID + " = " + receiptId, null,
-                null, null, null);
+
+
+        String sqlQuery = "SELECT " + concatStringArray(ReceiptDBHelper.DATABASE_COLUMNS) +
+                " FROM " + ReceiptDBHelper.RECEIPTS_TABLE_NAME +
+                " WHERE " + ReceiptDBHelper.RECEIPTS_TABLE_ID + " =?";
+
+        Cursor cursor = database.rawQuery(sqlQuery, new String[] {String.valueOf(receiptId)});
+
         cursor.moveToFirst();
         Receipt newReceipt = cursorToReceipt(cursor);
         cursor.close();
@@ -40,7 +45,8 @@ public class ReceiptDAO {
     }
 
     public long insertReceipt(ContentValues cv) {
-        long insertId = database.insert(ReceiptDBHelper.RECEIPTS_TABLE_NAME, "", cv);
+        String NULL_COLUMN_HACK = "image_url";
+        long insertId = database.insert(ReceiptDBHelper.RECEIPTS_TABLE_NAME, NULL_COLUMN_HACK, cv);
         return insertId;
     }
 
@@ -64,13 +70,14 @@ public class ReceiptDAO {
 
     public void deleteReceipt(long receiptId) {
         System.out.println("Deleting receipt with id: " + receiptId);
+
         database.delete(ReceiptDBHelper.RECEIPTS_TABLE_NAME, ReceiptDBHelper.RECEIPTS_TABLE_ID
-                + " = " + receiptId, null);
+                + "=?", new String[]{String.valueOf(receiptId)});
     }
 
     public void updateReceipt(ContentValues cv) {
-        database.update(ReceiptDBHelper.RECEIPTS_TABLE_NAME, cv, ReceiptDBHelper.RECEIPTS_TABLE_ID + "=" +
-                cv.getAsString(ReceiptDBHelper.RECEIPTS_TABLE_ID), null);
+        database.update(ReceiptDBHelper.RECEIPTS_TABLE_NAME, cv, ReceiptDBHelper.RECEIPTS_TABLE_ID + "= ?",
+                new String[] {cv.getAsString(ReceiptDBHelper.RECEIPTS_TABLE_ID)});
     }
 
     public void updateReceipt(Receipt receipt) {
@@ -89,8 +96,10 @@ public class ReceiptDAO {
     public List<Receipt> getAllReceipts() {
         List<Receipt> receipts = new ArrayList<Receipt>();
 
-        Cursor cursor = database.query(ReceiptDBHelper.RECEIPTS_TABLE_NAME,
-                ReceiptDBHelper.DATABASE_COLUMNS, null, null, null, null, null);
+        String sqlQuery = "SELECT " + concatStringArray(ReceiptDBHelper.DATABASE_COLUMNS) +
+                " FROM " + ReceiptDBHelper.RECEIPTS_TABLE_NAME;
+
+        Cursor cursor = database.rawQuery(sqlQuery, new String[] {} );
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -117,4 +126,18 @@ public class ReceiptDAO {
         return receipt;
     }
 
+    private String concatStringArray(String[] a) {
+        return concatStringArray (a, ",");
+    }
+
+    private String concatStringArray(String[] a, String delim) {
+        String r = "";
+        if (a.length >= 1) {
+            r = a[0];
+        }
+        for (int i=1; i<a.length; i++) {
+            r = r + delim + a[i];
+        }
+        return r;
+    }
 }

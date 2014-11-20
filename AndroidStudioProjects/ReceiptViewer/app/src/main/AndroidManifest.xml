@@ -35,7 +35,12 @@
         <activity
             android:name="com.bootcamp.receipt.receiptviewer.ReceiptDetailActivity"
             android:label="@string/title_receipt_detail"
+<<<<<<< Updated upstream
+            android:parentActivityName="com.bootcamp.receipt.receiptviewer.MainActivity" >
+=======
             android:parentActivityName="com.bootcamp.receipt.receiptviewer.ReceiptListActivity" >
+
+>>>>>>> Stashed changes
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ReceiptListActivity" />

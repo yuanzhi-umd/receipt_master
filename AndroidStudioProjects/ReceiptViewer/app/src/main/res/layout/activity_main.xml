@@ -12,8 +12,14 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="164dp"
+        android:layout_height="59dp"
         android:text="View Receipts"
         android:id="@+id/viewReceipts"
         android:layout_gravity="center_vertical" />
+
+    <Button
+        android:text="Create New Entry"
+        android:id="@+id/create_new"
+        android:layout_gravity="left|top"  />
+
 </LinearLayout>
