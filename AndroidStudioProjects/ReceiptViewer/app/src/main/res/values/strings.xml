@@ -13,6 +13,7 @@
     <string name = "amount_default">Enter Amount</string>
     <string name = "category_default">Select an expense category</string>
     <string name = "description_default">Enter Description</string>
+    <string name = "clean_database">Clear Database</string>
 
     <string-array name="category_select">
         <item>Fuel</item>
