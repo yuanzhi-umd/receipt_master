@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -57,9 +59,8 @@ public class CameraActivity extends Activity {
         if (requestCode == REQUEST_TAKE_PHOTO) {
             Log.i(LOG_TAG, "at onActivityResult");
             if (resultCode == RESULT_OK && mCurrentPhotoPath != null) {
-                long receiptID = createDataEntry();
                 Intent toMainIntent = new Intent();
-                toMainIntent.putExtra("receipt_id", receiptID);
+                toMainIntent.putExtra("photo_path", mCurrentPhotoPath);
                 setResult(RESULT_OK, toMainIntent);
             } else if (resultCode == RESULT_CANCELED) {
                 Log.d(LOG_TAG, "User cancelled taking picture.");
@@ -68,21 +69,6 @@ public class CameraActivity extends Activity {
             }
         }
         finish();
-    }
-
-    private long createDataEntry() {
-        long epoch = System.currentTimeMillis()/1000;
-
-        ContentValues cv = new ContentValues();
-        Log.i(LOG_TAG, "data path: " + mCurrentPhotoPath);
-
-        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[6], mCurrentPhotoPath);
-        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[1], epoch);
-        ReceiptDAO r = new ReceiptDAO(this);
-        r.open();
-        long r_id =  r.insertReceipt(cv);
-        r.close();
-        return r_id;
     }
 
     private void galleryAddPic() {
