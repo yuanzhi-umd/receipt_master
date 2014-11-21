@@ -48,7 +48,10 @@ public class MainActivity extends Activity {
         create_new_entry = (Button) findViewById(R.id.create_new);
         create_new_entry.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Pass in the receipt_id from main
                 Intent intent = new Intent(MainActivity.this, ReceiptDetailActivity.class);
+                // Hardcoded to 1
+                intent.putExtra("receipt_id", "1");
                 startActivity(intent);
             }
         });

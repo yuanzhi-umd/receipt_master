@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context="com.google.android.bootcamp.memegen.CreateMemeActivity$InputMemeTextFragment">
+        tools:context=".ReceiptDetailActivity">
 
         <Button
             android:id="@+id/save_entry"
@@ -77,7 +77,7 @@
         <ImageView
             android:id="@+id/receiptView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="500dp"
             android:layout_gravity="center_horizontal"
             android:layout_below="@id/camera"
             android:layout_marginLeft="30dp"

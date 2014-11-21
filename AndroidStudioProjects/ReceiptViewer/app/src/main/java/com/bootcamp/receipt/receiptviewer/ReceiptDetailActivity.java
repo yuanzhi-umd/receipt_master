@@ -1,6 +1,7 @@
 package com.bootcamp.receipt.receiptviewer;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.io.File;
 
@@ -25,8 +28,9 @@ import java.io.File;
  */
 public class ReceiptDetailActivity extends Activity {
 
-    private Button camera;
     private String LOG_TAG = ReceiptDetailActivity.class.getCanonicalName();
+    private String receiptPhotoPath;
+    long receipt_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +39,23 @@ public class ReceiptDetailActivity extends Activity {
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        camera = (Button) findViewById(R.id.camera);
+        Button camera = (Button) findViewById(R.id.camera);
         camera.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(ReceiptDetailActivity.this, CameraActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
+
         Button save_button = (Button) findViewById(R.id.save_entry);
         save_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Create database entry
+                Bundle extras = getIntent().getExtras();
+                receipt_id = Long.parseLong(extras.getString("receipt_id"));
+                Log.i(LOG_TAG, "receipt_id is " + receipt_id);
+
+                // Create database entry if receipt_id does not exist
+                // or Update existing record, if update, delete old photo
                 // Update ReceiptList view
 
             }
@@ -83,28 +92,77 @@ public class ReceiptDetailActivity extends Activity {
         }
     }
 
-    long receipt_id;
-    String photo_data_path;
+    private void deleteDataEntry(long receipt_id){
+        ReceiptDAO r = new ReceiptDAO(this);
+        r.open();
+        r.deleteReceipt(receipt_id);
+        r.close();
+    }
+
+    private long createDataEntry() {
+        long epoch = System.currentTimeMillis()/1000;
+        ContentValues cv = new ContentValues();
+        EditText descriptionEditText = (EditText) findViewById(R.id.description_text_edit);
+        EditText vendorEditText = (EditText) findViewById(R.id.vendor_text_edit);
+        EditText amountEditText = (EditText) findViewById(R.id.amount_text_edit);
+        Spinner categorySelect = (Spinner) findViewById(R.id.category_select);
+
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[1], epoch);
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[2], descriptionEditText.getText().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[3], amountEditText.getText().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[4], categorySelect.getSelectedItem().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[5], vendorEditText.getText().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[6], receiptPhotoPath);
+
+        Log.i(LOG_TAG, "data path: " + receiptPhotoPath);
+        Log.i(LOG_TAG, "description: " + descriptionEditText.getText().toString());
+        Log.i(LOG_TAG, "category: " + categorySelect.getSelectedItem().toString());
+
+        ReceiptDAO r = new ReceiptDAO(this);
+        r.open();
+        long r_id =  r.insertReceipt(cv);
+        r.close();
+        return r_id;
+    }
+
+    private void updateDataEntry(long receipt_id) {
+        ContentValues cv = new ContentValues();
+        EditText descriptionEditText = (EditText) findViewById(R.id.description_text_edit);
+        EditText vendorEditText = (EditText) findViewById(R.id.vendor_text_edit);
+        EditText amountEditText = (EditText) findViewById(R.id.amount_text_edit);
+        Spinner categorySelect = (Spinner) findViewById(R.id.category_select);
+
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[2], descriptionEditText.getText().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[3], amountEditText.getText().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[4], categorySelect.getSelectedItem().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[5], vendorEditText.getText().toString());
+        cv.put(ReceiptDBHelper.DATABASE_COLUMNS[6], receiptPhotoPath);
+
+        Log.i(LOG_TAG, "data path: " + receiptPhotoPath);
+        Log.i(LOG_TAG, "description: " + descriptionEditText.getText().toString());
+        Log.i(LOG_TAG, "category: " + categorySelect.getSelectedItem().toString());
+
+        ReceiptDAO r = new ReceiptDAO(this);
+        r.open();
+        r.updateReceipt(cv);
+        r.close();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
-                receipt_id = data.getLongExtra("receipt_id", 0);
-                Log.i(LOG_TAG, "got receipt_id: " + receipt_id);
+                // TODO return the photo path instead, construct the receipt object here.
+                receiptPhotoPath = data.getStringExtra("photo_path");
+                Log.i(LOG_TAG, "got photo_path: " + receiptPhotoPath);
             }
-            ReceiptDAO dao = new ReceiptDAO(this);
-            dao.open();
-            Receipt r = dao.getReceipt(receipt_id);
-            photo_data_path = r.getImageUrl();
-            dao.close();
-            Log.i(LOG_TAG, "saved photo path is: " + photo_data_path);
 
-            File imgFile = new File(photo_data_path);
+            File imgFile = new File(receiptPhotoPath);
             if(imgFile.exists()){
                 Log.i(LOG_TAG, "image file exists!");
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 ImageView myImage = (ImageView) findViewById(R.id.receiptView);
                 // myImage.setImageBitmap(myBitmap);
-                displayReceiptScaled(myImage, photo_data_path);
+                displayReceiptScaled(myImage, receiptPhotoPath);
             }
         }
     }
