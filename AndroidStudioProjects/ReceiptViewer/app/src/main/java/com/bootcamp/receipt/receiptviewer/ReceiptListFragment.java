@@ -76,28 +76,32 @@ public class ReceiptListFragment extends ListFragment {
         ReceiptDAO receiptDao = new ReceiptDAO(getActivity());
 
         List<Receipt> receiptList = null;
+
         try {
+            receiptDao.open();
             receiptList = receiptDao.getAllReceipts();
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.printStackTrace();
+        } catch (Throwable e) {
+
         }
 
-                 /*List<ReceiptItem> receiptItems = new ArrayList<ReceiptItem>();
 
-                 for (Receipt receipt : receiptList) {
-                         ReceiptItem item = new ReceiptItem(""+receipt.getId(), receipt.getVendor());
-                         receiptItems.add(item);
-                     }*/
+        if (receiptList.size() == 0) {
+            ReceiptItem item = new ReceiptItem("database empty or", "database error");
+        }
 
+        List<ReceiptItem> receiptItems = new ArrayList<ReceiptItem>();
+        for (Receipt receipt : receiptList) {
+            ReceiptItem item = new ReceiptItem("" + receipt.getId(), receipt.getVendor());
+            receiptItems.add(item);
+        }
 
 
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+        setListAdapter(new ArrayAdapter<ReceiptItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                DummyContent.ITEMS));
+                receiptItems));
     }
 
     @Override
